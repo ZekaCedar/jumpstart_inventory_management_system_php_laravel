@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
+use App\Models\Employee;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -64,10 +66,47 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        // return User::create([
+        //     'name' => $data['name'],
+        //     'email' => $data['email'],
+        //     'password' => Hash::make($data['password']),
+        // ]);
+
+        $user = new User();
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->contact = $data['contact'];
+        $user->role = $data['role'];
+        $user->password = Hash::make($data['password']);
+        $user->save();
+
+        if ($data['role'] == 'customer') {
+            $customer = new Customer();
+            $customer->customer_name = $data['name'];
+            $customer->customer_email =  $data['email'];
+            $customer->customer_contact =  $data['contact'];
+            $customer->user_id = $user->id;
+            $customer->save();
+        }
+
+        if ($data['role'] == 'employee') {
+            $employee = new Employee();
+            $employee->employee_name = $data['name'];
+            $employee->employee_email = $data['email'];
+            $employee->employee_contact = $data['contact'];
+            $employee->employee_job_title = $data['employee_job_title'];
+            $employee->employee_job_location = $data['employee_job_location'];
+
+            if ($employee->employee_job_title == 'administrator') {
+                $employee->employee_job_description = "oversee all parts of Jumpstart Management";
+            } else if ($employee->employee_job_title == 'manager') {
+                $employee->employee_job_description = "oversee long-term store goals, manage the day-to-day responsibilities of the store, review sales trends and implement store procedures.";
+            }
+
+            $employee->user_id = $user->id;
+            $employee->save();
+        }
+
+        return $user;
     }
 }

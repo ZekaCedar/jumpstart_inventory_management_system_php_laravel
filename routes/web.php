@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +21,22 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/home', function () {
+    if (Auth::check()) {
+        if (Auth::user()->role == 'employee') {
+            return redirect()->route("employee#index");
+        } else if (Auth::user()->role == 'customer') {
+            return redirect()->route("customer#index");
+        }
+    }
+})->name('auth.login');
+
+//Employee
+Route::group(['prefix' => 'employee'], function () {
+    Route::get('/', [EmployeeController::class, 'index'])->name('employee#index'); //employee dashboard
+
+});
+
+//Customer

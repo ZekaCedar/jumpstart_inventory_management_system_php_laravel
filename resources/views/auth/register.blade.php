@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="input-group mb-3">
-                        <input type="text" placeholder="Contact" class="form-control @error('contact') is-invalid @enderror" name="contact" value="{{ old('contact') }}" required autocomplete="contact" >
+                        <input type="number" placeholder="Contact" class="form-control @error('contact') is-invalid @enderror" name="contact" value="{{ old('contact') }}" required autocomplete="contact" >
 
                         @error('contact')
                             <span class="invalid-feedback" role="alert">
@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="input-group mb-3">
-                        <select name="Role" id="roleType" class="form-control" name="role" value="{{ old('role') }}" required autocomplete="role"
+                        <select name="role" id="roleType" class="form-control" value="{{ old('role') }}" required autocomplete="role"
                         style="color:rgb(175,179,184)">
                             <option>Choose Your Role in Jumpstart</option>
                             <option value="customer">Customer</option>
@@ -70,8 +70,8 @@
                             <select name="employee_job_location" class="form-control" name="employee_job_location" value="{{ old('employee_job_location') }}" required autocomplete="employee_job_location"
                             style="color: black">
                                 <option>Choose Your Job / Store Location</option>
-                                <option value="manager">HQ</option>
-                                <option value="administrator">Store Branch 1</option>
+                                <option value="HQ">HQ</option>
+                                <option value="Store Branch 1">Store Branch 1</option>
                              </select>
                         </div>
                     </div>
@@ -103,15 +103,15 @@
 
                     </div>
 
-                    <div class="form-group text-left">
+                    {{-- <div class="form-group text-left">
                         <div class="checkbox checkbox-fill d-inline">
                             <input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-1" checked="">
                             <label for="checkbox-fill-1" class="cr"> Save Details</label>
                         </div>
-                    </div>
+                    </div> --}}
                    
                     <button class="btn btn-primary shadow-2 mb-4" type="submit">Sign up</button>
-                    <p class="mb-0 text-muted">Allready have an account? <a href="auth-signin.html"> Log in</a></p>
+                    <p class="mb-0 text-muted">Allready have an account? <a href="{{ route('login') }}"> Log in</a></p>
                 </form>
                 </div>
             </div>
