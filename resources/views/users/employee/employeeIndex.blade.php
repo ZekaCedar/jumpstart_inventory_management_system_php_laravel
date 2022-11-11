@@ -1,1 +1,6 @@
-<h1>HELOOOOO EMPLOYEE</h1>
+@extends('users.employee.layouts.app')
+
+@section('content')
+
+
+@endsection
