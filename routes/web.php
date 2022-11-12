@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +37,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/home', function () {
 //Employee
 Route::group(['prefix' => 'employee'], function () {
     Route::get('/', [EmployeeController::class, 'index'])->name('employee#index'); //employee dashboard
-
+    Route::get('/supplier', [SupplierController::class, 'SupplierIndex'])->name('employee#SupplierIndex');
+    Route::post('/addSupplier', [SupplierController::class, 'CreateSupplier'])->name('supplier#CreateSupplier');
 });
 
 //Customer
