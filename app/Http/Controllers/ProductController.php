@@ -5,20 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class SupplierController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function SupplierIndex()
+    public function index()
     {
-        $supplierData = Supplier::paginate(5);
-        $productData = Product::paginate(5);
-
-        return view('users.employee.employeeSupplier')->with(['supplierData' => $supplierData, 'productData' => $productData]);
+        //
     }
 
     /**
@@ -26,14 +24,9 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function CreateSupplier(Request $request)
+    public function create()
     {
-        $supplier = new Supplier();
-        $supplier->supplier_name = $request->input('supplier_name');
-        $supplier->supplier_service = $request->input('supplier_service');
-        $supplier->save();
-
-        return redirect()->route('employee#SupplierIndex');
+        //
     }
 
     /**
@@ -42,9 +35,29 @@ class SupplierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function CreateProduct(Request $request)
     {
-        //
+        $product = new Product();
+        if ($request->hasfile('product_image')) {
+            $imageFile = $request->file('product_image');
+            $imageName = uniqid() . '_' . $imageFile->getClientOriginalName();
+            $imageFile->move(public_path() . './uploads/products', $imageName);
+            $product->product_image = $imageName;
+        }
+
+        $product->product_name = $request->input('product_name');
+        $product->product_price = $request->input('product_price');
+        $product->product_type = $request->input('product_type');
+        $product->product_category = $request->input('product_category');
+        $product->product_supplier = $request->input('product_supplier');
+
+        $supplier = Supplier::where('supplier_name', $request->input('product_supplier'))->first();
+
+        $product->supplier_id = $supplier->id;
+        $product->manager_id = $request->input('manager_id');
+        $product->save();
+
+        return redirect()->route('employee#SupplierIndex');
     }
 
     /**
