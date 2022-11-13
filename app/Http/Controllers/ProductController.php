@@ -6,6 +6,9 @@ use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+
+use function PHPUnit\Framework\isNull;
 
 class ProductController extends Controller
 {
@@ -57,7 +60,64 @@ class ProductController extends Controller
         $product->manager_id = $request->input('manager_id');
         $product->save();
 
-        return redirect()->route('employee#SupplierIndex');
+        return  redirect()->back()->with('status', 'Product Added Successfully');
+    }
+
+    public function EditProduct($id)
+    {
+        $product = Product::find($id);
+        return response()->json([
+            'status' => 200,
+            'product' => $product,
+        ]);
+    }
+
+    public function UpdateProduct(Request $request)
+    {
+        $product_id = $request->input('product_id');
+        $product = Product::find($product_id);
+        $product->product_name = $request->input('product_name');
+        $product->product_supplier = $request->input('product_supplier');
+        $product->product_price = $request->input('product_price');
+        $product->product_type = $request->input('product_type');
+        $product->product_category = $request->input('product_category');
+
+        if ($request->hasfile('product_image')) {
+            $updateImage = $product['product_image'];
+
+            if (File::exists(public_path() . '/uploads/products/' . $updateImage)) {
+                File::delete(public_path() . '/uploads/products/' . $updateImage);
+            }
+            $imageFile = $request->file('product_image');
+            $imageName = uniqid() . '_' . $imageFile->getClientOriginalName();
+            $imageFile->move(public_path() . './uploads/products', $imageName);
+            $product->product_image = $imageName;
+        } else {
+            $product->product_image = $request->input('product_image');
+        }
+
+        $supplier = Supplier::where('supplier_name', $request->input('product_supplier'))->first();
+
+        $product->supplier_id = $supplier->id;
+        $product->manager_id = $request->input('manager_id');
+        $product->update();
+
+        // return redirect()->route('employee#SupplierIndex');
+        return redirect()->back()->with('status', 'Product Updated Successfully');
+    }
+
+    public function DeleteProduct($id)
+    {
+        $deleteData = Product::select('product_image')->where('id', $id)->first();
+        $deleteImage = $deleteData['product_image'];
+
+        Product::where('id', $id)->delete();
+
+        if (File::exists(public_path() . '/uploads/products/' . $deleteImage)) {
+            File::delete(public_path() . '/uploads/products/' . $deleteImage);
+        }
+
+        return back()->with('status', 'Product Deleted Successfully');
     }
 
     /**

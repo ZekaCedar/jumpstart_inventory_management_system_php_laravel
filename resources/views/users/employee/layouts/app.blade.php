@@ -17,6 +17,11 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
+    <!-- DataTables CDN -->
+    <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/keytable/2.8.0/css/keyTable.dataTables.min.css" rel="stylesheet" >
+
+   
      <!-- Favicon icon -->
     <link rel="icon" href="{{url('/assets/images/favicon.ico')}}" type="image/x-icon">
     <!-- fontawesome icon -->
@@ -26,7 +31,8 @@
     <!-- vendor css -->
     <link rel="stylesheet" href="{{url('/assets/css/style.css')}}">
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   
 </head>
 
 <body>
@@ -270,6 +276,19 @@
     <script src="{{url('/assets/js/vendor-all.min.js')}}"></script>
 	<script src="{{url('/assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{url('/assets/js/pcoded.min.js')}}"></script>  
+    <script src="{{url('/assets/js/jquery-3.6.0.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" ></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @yield('scripts')
+
+    @if(Session::has('status'))
+        <script>
+            toastr.success("{!! Session::get('status') !!}");
+        </script>
+    @endif
 
 </body>
 </html>

@@ -33,7 +33,52 @@ class SupplierController extends Controller
         $supplier->supplier_service = $request->input('supplier_service');
         $supplier->save();
 
-        return redirect()->route('employee#SupplierIndex');
+        return  redirect()->back()->with('status', 'Supplier Added Successfully');
+    }
+
+    public function EditSupplier($id)
+    {
+        $supplier = Supplier::find($id);
+        return response()->json([
+            'status' => 200,
+            'supplier' => $supplier,
+        ]);
+    }
+
+    public function UpdateSupplier(Request $request)
+    {
+        // if (!empty($request->input('supplier_id'))) {
+        //     dd('supplier_id is not empty.');
+        // } else {
+        //     dd('supplier_id is empty.');
+        // }
+
+        // if (!empty($request->input('supplier_name'))) {
+        //     dd('supplier_name is not empty.');
+        // } else {
+        //     dd('supplier_name is empty.');
+        // }
+
+        // if (!empty($request->input('supplier_service'))) {
+        //     dd('supplier_service is not empty.');
+        // } else {
+        //     dd('supplier_service is empty.');
+        // }
+
+        $supplier_id = $request->input('supplier_id');
+        $supplier = Supplier::find($supplier_id);
+        $supplier->supplier_name = $request->input('supplier_name');
+        $supplier->supplier_service = $request->input('supplier_service');
+        $supplier->update();
+
+        // return redirect()->route('employee#SupplierIndex');
+        return redirect()->back()->with('status', 'Supplier Updated Successfully');
+    }
+
+    public function DeleteSupplier($id)
+    {
+        Supplier::where('id', $id)->delete();
+        return back()->with('status', 'Supplier Deleted Successfully');
     }
 
     /**
