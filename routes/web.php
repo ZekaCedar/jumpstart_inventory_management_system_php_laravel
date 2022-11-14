@@ -62,7 +62,8 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/add-to-cart', [CartController::class, 'AddToCart'])->name('cart#AddToCart');
     Route::get('decrease-quantity/{id}', [CartController::class, 'DecreaseQuantity'])->name('cart#DecreaseQuantity');
     Route::get('increase-quantity/{id}', [CartController::class, 'IncreaseQuantity'])->name('cart#IncreaseQuantity');
-    Route::get('delete-cart-item/{id}', [CartController::class, 'DeleteCartItem'])->name('cart#DeleteCartItem');
+    Route::get('/delete-cart-item/{id}', [CartController::class, 'DeleteCartItem'])->name('cart#DeleteCartItem');
+    Route::post('/place-order', [OrderController::class, 'PlaceOrder'])->name('order#PlaceOrder');
 });
 
 //Customer

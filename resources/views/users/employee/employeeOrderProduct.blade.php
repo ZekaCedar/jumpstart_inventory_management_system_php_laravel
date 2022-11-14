@@ -215,7 +215,8 @@
                             <tbody>
 
                               @if(count($carts) > 0 )
-                              @php $total = 0; @endphp
+                              @php $total = 0;
+                              $total_quantity = 0;@endphp
                               @foreach($carts as $cart)
                               <tr>
                                 <td class="text-wrap">{{ $cart->cart_item_name }}</td>
@@ -271,7 +272,10 @@
                                   </a>
                                 </td>
                               </tr>
-                              @php $total += $cart->cart_item_price * $cart->cart_item_quantity; @endphp
+                              @php $total += $cart->cart_item_price * $cart->cart_item_quantity;
+
+                              $total_quantity += $cart->cart_item_quantity;
+                              @endphp
                               @endforeach
                               @else
                               <div class="alert alert-primary" role="alert">
@@ -288,7 +292,7 @@
                               <p class="mb-1"><b>Shipping (RM)</b></p>
                             </div>
                             <div class="flex-sm-col col-auto">
-                              <p class="mb-1"><b>@php $shipping_price = 10; echo $shipping_price; @endphp </b></p>
+                              <p class="mb-1"><b>@php $shipping_price = 10; @endphp 10.00 </b></p>
                             </div>
                           </div>
                           <div class="row justify-content-between">
@@ -300,8 +304,10 @@
                                   @php
                                   if(isset($total)){
                                   echo $total;
+                                  $total_quantity;
                                   }else{
                                   echo $total = 0;
+                                  echo $total_quantity=0;
                                   }
                                   @endphp
                                 </b></p>
@@ -318,8 +324,18 @@
                             </div>
                           </div>
 
-                          <button type="button" class="btn btn-primary btn-lg btn-block">Order</button>
+                          <form action="{{ route('order#PlaceOrder') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="order_quantity" value="@php
+                              echo $total_quantity;
+                            @endphp">
 
+                            <input type="hidden" name="order_total" value="@php
+                            echo $final_total;
+                            @endphp">
+
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Order</button>
+                          </form>
                           <hr class="my-0">
 
 
