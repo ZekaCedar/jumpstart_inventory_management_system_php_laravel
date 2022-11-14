@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -43,6 +44,9 @@ Route::get('editSupplier/{id}', [SupplierController::class, 'EditSupplier']);
 //Product Edit
 Route::get('editProduct/{id}', [ProductController::class, 'EditProduct']);
 
+//Cart
+// Route::get('decrease-quantity/{id}', [CartController::class, 'DecreaseQuantity']);
+// Route::get('increase-quantity/{id}', [CartController::class, 'IncreaseQuantity']);
 
 //Employee
 Route::group(['prefix' => 'employee'], function () {
@@ -55,6 +59,10 @@ Route::group(['prefix' => 'employee'], function () {
     Route::put('/updateProduct', [ProductController::class, 'UpdateProduct'])->name('product#UpdateProduct');
     Route::get('/deleteProduct/{id}', [ProductController::class, 'DeleteProduct'])->name('product#DeleteProduct');
     Route::get('/order/{id}', [OrderController::class, 'Order'])->name('order#Order');
+    Route::post('/add-to-cart', [CartController::class, 'AddToCart'])->name('cart#AddToCart');
+    Route::get('decrease-quantity/{id}', [CartController::class, 'DecreaseQuantity'])->name('cart#DecreaseQuantity');
+    Route::get('increase-quantity/{id}', [CartController::class, 'IncreaseQuantity'])->name('cart#IncreaseQuantity');
+    Route::get('delete-cart-item/{id}', [CartController::class, 'DeleteCartItem'])->name('cart#DeleteCartItem');
 });
 
 //Customer

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -19,8 +21,10 @@ class OrderController extends Controller
         // dd($supplierData);
         $products = Product::where('supplier_id', $id)->get();
         // dd($products);
+        $carts = Cart::where('user_id', Auth::id())->get();
+        // dd($carts);
 
-        return view('users.employee.employeeOrderProduct')->with(['supplierData' => $supplierData, 'products' => $products]);
+        return view('users.employee.employeeOrderProduct')->with(['supplierData' => $supplierData, 'products' => $products, 'carts' => $carts]);
     }
 
     /**

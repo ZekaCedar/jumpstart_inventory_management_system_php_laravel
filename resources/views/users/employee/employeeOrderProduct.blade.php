@@ -2,236 +2,354 @@
 
 @section('content')
 
+<style>
+  .mt-50 {
+
+    margin-top: 50px;
+  }
+
+  .mb-50 {
+
+    margin-bottom: 50px;
+  }
+
+
+
+  .card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: .1875rem;
+  }
+
+  .card-img-actions {
+    position: relative;
+  }
+
+  .card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+    text-align: center;
+  }
+
+  .card-img {
+
+    width: 350px;
+  }
+
+  .star {
+    color: red;
+  }
+
+  .bg-cart {
+    background-color: orange;
+    color: #fff;
+  }
+
+  .bg-cart:hover {
+
+    color: #fff;
+  }
+
+  .bg-buy {
+    background-color: green;
+    color: #fff;
+    padding-right: 29px;
+  }
+
+  .bg-buy:hover {
+
+    color: #fff;
+  }
+
+  a {
+
+    text-decoration: none !important;
+  }
+</style>
+
+
 <section class="pcoded-main-container">
-   
+
   <div class="pcoded-wrapper">
-      <div class="pcoded-content">
-          <div class="pcoded-inner-content">
-              <!-- [ breadcrumb ] start -->
-              {{-- <div class="page-header">
-                  <div class="page-block">
-                      <div class="row align-items-center">
-                          <div class="col-md-12">
-                              <div class="page-header-title">
-                                  <h5 class="m-b-10">Bootstrap Basic Tables</h5>
-                              </div>
-                              <ul class="breadcrumb">
-                                  <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
-                                  <li class="breadcrumb-item"><a href="#!">Tables</a></li>
-                                  <li class="breadcrumb-item"><a href="javascript:">Basic Tables</a></li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-              </div> --}}
-              <!-- [ breadcrumb ] end -->
-              <div class="main-body">
-                
-                  <div class="page-wrapper">
-                      <!-- [ Main Content ] start -->
-                      <div class="row">
-                          <!-- [ basic-table ] start -->
-                          <div class="col-xl-12">
-                            
-                              <div class="card">
-                                  <div class="card-header" >
-                                      <h5>Supplier Details</h5>
-                                    
-                                  </div>
-                                  <div class="card-block table-border-style">
-
-                                    @if(count($products) > 0 )
-                                    <section class="h-100 h-custom">
-                                        <div class="container py-5 h-100">
-                                          <div class="row d-flex justify-content-center align-items-center h-100">
-                                            <div class="col-12">
-                                              <div class="card card-registration card-registration-2" style="border-radius: 15px;">
-                                                <div class="card-body p-0">
-                                                  <div class="row g-0">
-                                                    <div class="col-lg-8">
-                                                      <div class="p-5">
-                                                        <div class="d-flex justify-content-between align-items-center mb-5">
-                                                          
-                                                        </div>
-                                                        {{-- <hr class="my-4"> --}}
-                                      
-                                                        <div class="row mb-4 d-flex justify-content-between align-items-center">
-                                                          <div class="col-md-2 col-lg-2 col-xl-2">
-                                                            <img
-                                                              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img5.webp"
-                                                              class="img-fluid rounded-3" alt="Cotton T-shirt">
-                                                          </div>
-                                                          <div class="col-md-3 col-lg-3 col-xl-3">
-                                                            <h6 class="text-muted">Shirt</h6>
-                                                            <h6 class="text-black mb-0">Cotton T-shirt</h6>
-                                                          </div>
-                                                          <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                                            <button class="btn btn-link px-2"
-                                                              onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                              <i class="fas fa-minus"></i>
-                                                            </button>
-                                      
-                                                            <input id="form1" min="0" name="quantity" value="1" type="number"
-                                                              class="form-control form-control-sm" />
-                                      
-                                                            <button class="btn btn-link px-2"
-                                                              onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                              <i class="fas fa-plus"></i>
-                                                            </button>
-                                                          </div>
-                                                          <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                                            <h6 class="mb-0">€ 44.00</h6>
-                                                          </div>
-                                                          <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                            <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
-                                                          </div>
-                                                        </div>
-                                      
-                                                        <hr class="my-4">
-                                      
-                                                        <div class="row mb-4 d-flex justify-content-between align-items-center">
-                                                          <div class="col-md-2 col-lg-2 col-xl-2">
-                                                            <img
-                                                              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img6.webp"
-                                                              class="img-fluid rounded-3" alt="Cotton T-shirt">
-                                                          </div>
-                                                          <div class="col-md-3 col-lg-3 col-xl-3">
-                                                            <h6 class="text-muted">Shirt</h6>
-                                                            <h6 class="text-black mb-0">Cotton T-shirt</h6>
-                                                          </div>
-                                                          <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                                            <button class="btn btn-link px-2"
-                                                              onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                              <i class="fas fa-minus"></i>
-                                                            </button>
-                                      
-                                                            <input id="form1" min="0" name="quantity" value="1" type="number"
-                                                              class="form-control form-control-sm" />
-                                      
-                                                            <button class="btn btn-link px-2"
-                                                              onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                              <i class="fas fa-plus"></i>
-                                                            </button>
-                                                          </div>
-                                                          <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                                            <h6 class="mb-0">€ 44.00</h6>
-                                                          </div>
-                                                          <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                            <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
-                                                          </div>
-                                                        </div>
-                                      
-                                                        <hr class="my-4">
-                                      
-                                                        <div class="row mb-4 d-flex justify-content-between align-items-center">
-                                                          <div class="col-md-2 col-lg-2 col-xl-2">
-                                                            <img
-                                                              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img7.webp"
-                                                              class="img-fluid rounded-3" alt="Cotton T-shirt">
-                                                          </div>
-                                                          <div class="col-md-3 col-lg-3 col-xl-3">
-                                                            <h6 class="text-muted">Shirt</h6>
-                                                            <h6 class="text-black mb-0">Cotton T-shirt</h6>
-                                                          </div>
-                                                          <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                                            <button class="btn btn-link px-2"
-                                                              onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                              <i class="fas fa-minus"></i>
-                                                            </button>
-                                      
-                                                            <input id="form1" min="0" name="quantity" value="1" type="number"
-                                                              class="form-control form-control-sm" />
-                                      
-                                                            <button class="btn btn-link px-2"
-                                                              onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                              <i class="fas fa-plus"></i>
-                                                            </button>
-                                                          </div>
-                                                          <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                                            <h6 class="mb-0">€ 44.00</h6>
-                                                          </div>
-                                                          <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                            <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
-                                                          </div>
-                                                        </div>
-                                      
-                                                        <hr class="my-4">
-                                      
-                                                        <div class="pt-5">
-                                                          <h6 class="mb-0"><a href="#!" class="text-body"><i
-                                                                class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                    <div class="col-lg-4 bg-grey">
-                                                      <div class="p-5">
-                                                        <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
-                                                        <hr class="my-4">
-                                      
-                                                        <div class="d-flex justify-content-between mb-4">
-                                                          <h5 class="text-uppercase">items 3</h5>
-                                                          <h5>€ 132.00</h5>
-                                                        </div>
-                                      
-                                                        <h5 class="text-uppercase mb-3">Shipping</h5>
-                                      
-                                                        <div class="mb-4 pb-2">
-                                                          <select class="select">
-                                                            <option value="1">Standard-Delivery- €5.00</option>
-                                                            <option value="2">Two</option>
-                                                            <option value="3">Three</option>
-                                                            <option value="4">Four</option>
-                                                          </select>
-                                                        </div>
-                                      
-                                                        <h5 class="text-uppercase mb-3">Give code</h5>
-                                      
-                                                        <div class="mb-5">
-                                                          <div class="form-outline">
-                                                            <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
-                                                            <label class="form-label" for="form3Examplea2">Enter your code</label>
-                                                          </div>
-                                                        </div>
-                                      
-                                                        <hr class="my-4">
-                                      
-                                                        <div class="d-flex justify-content-between mb-5">
-                                                          <h5 class="text-uppercase">Total price</h5>
-                                                          <h5>€ 137.00</h5>
-                                                        </div>
-                                      
-                                                        <button type="button" class="btn btn-dark btn-block btn-lg"
-                                                          data-mdb-ripple-color="dark">Register</button>
-                                      
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </section>
-                                    @else
-                                    <p>No record</p>
-                                    @endif
-                                    
-                                   
-                                  </div>
-                           
-                          </div>
-
-                          <!-- [ basic-table ] end -->
-
-                          
-                      </div>
-                      <!-- [ Main Content ] end -->
-                  </div>
+    <div class="pcoded-content">
+      <div class="pcoded-inner-content">
+        <!-- [ breadcrumb ] start -->
+        {{-- <div class="page-header">
+          <div class="page-block">
+            <div class="row align-items-center">
+              <div class="col-md-12">
+                <div class="page-header-title">
+                  <h5 class="m-b-10">Bootstrap Basic Tables</h5>
+                </div>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="#!">Tables</a></li>
+                  <li class="breadcrumb-item"><a href="javascript:">Basic Tables</a></li>
+                </ul>
               </div>
+            </div>
           </div>
+        </div> --}}
+        <!-- [ breadcrumb ] end -->
+        <div class="main-body">
+
+          <div class="page-wrapper">
+            <!-- [ Main Content ] start -->
+            <div class="row">
+              <!-- [ basic-table ] start -->
+              <div class="col-xl-12">
+
+                <div class="card">
+                  <div class="card-header">
+                    <h5> Order Product From {{ $supplierData->supplier_name }}</h5>
+
+                    <a style="float: right;" href="{{ URL::previous() }}" class="btn btn-warning"> <i
+                        class="fas fa-arrow-left"></i> Go
+                      Back</a>
+
+                  </div>
+                  <div class="card-block table-border-style">
+
+                    @if(count($products) > 0 )
+
+                    <div class="container text-center">
+                      <div class="row">
+                        <div class="col">
+                          <!-- Start Product Details -->
+                          <div class="container d-flex justify-content-center mt-50 mb-50" style="margin-top: 0;">
+                            <div class="row">
+
+                              @foreach($products as $product)
+                              <div class="col-md-6 mt-2">
+                                <div class="card ">
+                                  <div class="card-body">
+                                    <div class="card-img-actions">
+
+                                      <img src="{{ asset('uploads/products/' . $product->product_image) }}"
+                                        class="card-img img-fluid" width="96" height="150" alt="">
+                                    </div>
+                                  </div>
+
+                                  <div class="card-body bg-light text-center">
+                                    <div class="mb-2">
+                                      <h6 class="font-weight-semibold mb-2">
+                                        <a href="#" class="text-default mb-2" data-abc="true">{{ $product->product_name
+                                          }}</a>
+                                      </h6>
+
+                                      {{-- <a href="#" class="text-muted" data-abc="true">Laptops & Notebooks</a> --}}
+                                    </div>
+
+                                    <h5 class="mb-0 font-weight-semibold" style="margin: 20px 0;">RM {{
+                                      $product->product_price
+                                      }}</h3>
+
+                                      {{-- <div>
+                                        <i class="fa fa-star star"></i>
+                                        <i class="fa fa-star star"></i>
+                                        <i class="fa fa-star star"></i>
+                                        <i class="fa fa-star star"></i>
+                                      </div>
+
+                                      <div class="text-muted mb-3">34 reviews</div> --}}
+
+                                      <form action="{{ route('cart#AddToCart') }}" method="POST">
+
+                                        @csrf
+
+                                        <input type="hidden" value="{{ $product->product_name
+                                      }}" name="cart_item_name">
+
+                                        <input type="hidden" value="{{ $product->product_price
+                                      }}" name="cart_item_price">
+
+                                        <input type="hidden" value="{{ $product->id
+                                      }}" name="product_id">
+
+                                        @php
+                                        $prod_id = $product->id;
+                                        @endphp
+
+                                        <input type="hidden" value="{{ $supplierData->id
+                                      }}" name="supplier_id">
+
+                                        <input type="hidden" value="{{ Auth()->user()->id }}" name="user_id">
+
+                                        <button type="submit" class="btn bg-cart" style="margin-top: 10px;"><i
+                                            class="fa fa-cart-plus mr-2"></i> Add to cart</button>
+
+                                      </form>
+
+                                  </div>
+                                </div>
+                              </div>
+                              @endforeach
+
+                            </div>
+                          </div>
+
+                          <!-- End Product Details -->
+                        </div>
+                        <div class="col product_data">
+
+                          <table class="table table-image">
+                            <thead>
+                              <tr>
+
+                                <th scope="col">Product</th>
+                                <th scope="col">Price (RM)</th>
+                                <th scope="col">Qty</th>
+                                <th scope="col">Total (RM)</th>
+                                <th scope="col">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+
+                              @if(count($carts) > 0 )
+                              @php $total = 0; @endphp
+                              @foreach($carts as $cart)
+                              <tr>
+                                <td class="text-wrap">{{ $cart->cart_item_name }}</td>
+                                <td>{{ $cart->cart_item_price }}
+                                </td>
+                                <td>
+
+                                  <div class="input-group text-center mb-3" style="width: 150px;">
+                                    <form action="{{ route ('cart#DecreaseQuantity' , $cart->id) }}" method="GET">
+                                      <button type="submit" class="input-group-text">-</button>
+                                    </form>
+                                    <input id=demoInput type="text" name="cart_item_quantity"
+                                      class="form-control qty-input text-center" value="{{ $cart->cart_item_quantity }}"
+                                      style="height:38px;" readonly>
+                                    <form action="{{ route ('cart#IncreaseQuantity' , $cart->id) }}" method="GET">
+                                      <button type="submit" class="input-group-text">+</button>
+                                    </form>
+
+                                  </div>
+                                  {{-- <input type="hidden" class="prod_id" value="{{ $cart->product_id }}">
+                                  {{-- <input id=demoInput type=number min=1 max=200
+                                    value="{{ $cart->cart_item_quantity }}">
+
+                                  <form method="get">
+                                    <input type="submit" name="button1" value="+" />
+
+                                    <input type="submit" name="button2" value="-" />
+                                  </form> --}}
+
+                                  {{-- <button onclick="increment()">+</button>
+                                  <button onclick="decrement()">-</button> --}}
+                                  {{-- <script>
+                                    function increment() {
+                                        document.getElementById('demoInput').stepUp();
+                                    }
+                                    function decrement() {
+                                        document.getElementById('demoInput').stepDown();
+                                    }
+                                  </script> --}}
+
+                                </td>
+
+                                <td>
+                                  @php
+                                  $total_line_item = $cart->cart_item_price * $cart->cart_item_quantity;
+                                  echo $total_line_item;
+                                  @endphp
+                                </td>
+                                <td>
+                                  <a href="{{ route('cart#DeleteCartItem' , $cart->id) }}" class="btn btn-danger btn-sm"
+                                    style="padding:6px;">
+                                    <i class="fa fa-times" style="margin-right: 0;"></i>
+                                  </a>
+                                </td>
+                              </tr>
+                              @php $total += $cart->cart_item_price * $cart->cart_item_quantity; @endphp
+                              @endforeach
+                              @else
+                              <div class="alert alert-primary" role="alert">
+                                No product added
+                              </div>
+
+                              @endif
+
+                            </tbody>
+                          </table>
+
+                          <div class="row justify-content-between">
+                            <div class="col-4">
+                              <p class="mb-1"><b>Shipping (RM)</b></p>
+                            </div>
+                            <div class="flex-sm-col col-auto">
+                              <p class="mb-1"><b>@php $shipping_price = 10; echo $shipping_price; @endphp </b></p>
+                            </div>
+                          </div>
+                          <div class="row justify-content-between">
+                            <div class="col-4">
+                              <p class="mb-1"><b>Subtotal (RM)</b></p>
+                            </div>
+                            <div class="flex-sm-col col-auto">
+                              <p class="mb-1"><b>
+                                  @php
+                                  if(isset($lorem)){
+                                  echo $total;
+                                  }else{
+                                  echo $total = 0;
+                                  }
+                                  @endphp
+                                </b></p>
+                            </div>
+                          </div>
+                          <div class="row justify-content-between">
+                            <div class="col-4">
+                              <p><b>Total (RM)</b>
+                              </p>
+                            </div>
+                            <div class="flex-sm-col col-auto">
+                              <p class="mb-1"><b>@php $final_total = $total + $shipping_price; echo $final_total;
+                                  @endphp </b></p>
+                            </div>
+                          </div>
+
+                          <button type="button" class="btn btn-primary btn-lg btn-block">Order</button>
+
+                          <hr class="my-0">
+
+
+                        </div>
+                      </div>
+                    </div>
+
+                    @else
+                    <div class="alert alert-primary" role="alert">
+                      No record
+                    </div>
+
+                    @endif
+
+
+                  </div>
+
+                </div>
+
+                <!-- [ basic-table ] end -->
+
+
+              </div>
+              <!-- [ Main Content ] end -->
+            </div>
+          </div>
+        </div>
       </div>
-  </div>
-</section> 
+    </div>
+</section>
 
 
 
@@ -239,55 +357,33 @@
 
 @section('scripts')
 
-<script>
-    $(document).ready(function () {
-        $(document).on('click', '.editbtn1', function () {
-            var supplier_id = $(this).val();
-            // alert(supplier_id);
-            $('#editModal1').modal('show');
+{{-- <script>
+  $.ajaxSetup({
+    headers:{
+      'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+    }
+  });
 
-            $.ajax({
-                type: "GET",
-                url: "/editSupplier/"+supplier_id,
-                success: function (response) {
-                    // console.log(response);
-                    $('#supplier_name').val(response.supplier.supplier_name);
-                    $('#supplier_service').val(response.supplier.supplier_service);
-                    $('#supplier_id').val(supplier_id);
-                }
-            });
-        });
-    });
+  $('.changeQuantity').click(function (e) { 
+  e.preventDefault();
 
-</script>
+  var prod_id = $(this).closest('.product_data').find('.prod_id').val();
+  var qty = $(this).closest('.product_data').find('.qty-input').val();
+  data = {
+    'prod_id':prod_id,
+    'prod_qty':qty,
+  }
 
-<script>
-    $(document).ready(function () {
-        $(document).on('click', '.editbtn2', function () {
-            var product_id = $(this).val();
-            // alert(supplier_id);
-            $('#editModal2').modal('show');
-
-            $.ajax({
-                type: "GET",
-                url: "/editProduct/"+product_id,
-                success: function (response) {
-                    // console.log(response);
-                     $('#product_id').val(product_id);
-                     $('#product_name').val(response.product.product_name);
-                     $('#product_supplier').val(response.product.product_supplier);
-                     $('#product_category').val(response.product.product_category);
-                     $('#product_type').val(response.product.product_type);
-                     $('#product_price').val(response.product.product_price);
-                     $('#product_image').val(response.product.product_image);
-                }
-            });
-        });
-    });
-
-</script>
+  $.ajax({
+    type: "POST",
+    url: "/update-cart",
+    data: data,
+    success: function (response) {
+      alert(response);
+    }
+  });
+  
+});
+</script> --}}
 
 @endsection
-
-
-
