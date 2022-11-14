@@ -298,7 +298,7 @@
                             <div class="flex-sm-col col-auto">
                               <p class="mb-1"><b>
                                   @php
-                                  if(isset($lorem)){
+                                  if(isset($total)){
                                   echo $total;
                                   }else{
                                   echo $total = 0;
