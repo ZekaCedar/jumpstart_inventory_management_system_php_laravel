@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +49,9 @@ Route::get('editProduct/{id}', [ProductController::class, 'EditProduct']);
 // Route::get('decrease-quantity/{id}', [CartController::class, 'DecreaseQuantity']);
 // Route::get('increase-quantity/{id}', [CartController::class, 'IncreaseQuantity']);
 
+//Order
+Route::get('editOrder/{id}', [OrderController::class, 'EditOrder']);
+
 //Employee
 Route::group(['prefix' => 'employee'], function () {
     Route::get('/', [EmployeeController::class, 'index'])->name('employee#index'); //employee dashboard
@@ -58,12 +62,16 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/addProduct', [ProductController::class, 'CreateProduct'])->name('product#CreateProduct');
     Route::put('/updateProduct', [ProductController::class, 'UpdateProduct'])->name('product#UpdateProduct');
     Route::get('/deleteProduct/{id}', [ProductController::class, 'DeleteProduct'])->name('product#DeleteProduct');
-    Route::get('/order/{id}', [OrderController::class, 'Order'])->name('order#Order');
     Route::post('/add-to-cart', [CartController::class, 'AddToCart'])->name('cart#AddToCart');
     Route::get('decrease-quantity/{id}', [CartController::class, 'DecreaseQuantity'])->name('cart#DecreaseQuantity');
     Route::get('increase-quantity/{id}', [CartController::class, 'IncreaseQuantity'])->name('cart#IncreaseQuantity');
     Route::get('/delete-cart-item/{id}', [CartController::class, 'DeleteCartItem'])->name('cart#DeleteCartItem');
+    Route::get('/order/{id}', [OrderController::class, 'Order'])->name('order#Order');
     Route::post('/place-order', [OrderController::class, 'PlaceOrder'])->name('order#PlaceOrder');
+    Route::get('/view-order', [OrderController::class, 'ViewOrder'])->name('order#ViewController');
+    Route::put('/updateOrder', [OrderController::class, 'UpdateOrder'])->name('order#UpdateOrder');
+    Route::get('/stock', [StockController::class, 'StockIndex'])->name('stock#StockIndex');
+    Route::get('/stock-product', [StockController::class, 'StockProduct'])->name('stock#StockProduct');
 });
 
 //Customer

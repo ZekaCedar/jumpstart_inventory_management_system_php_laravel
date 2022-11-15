@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\Employee;
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Product;
-use App\Models\Supplier;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Stock;
+use App\Models\Product;
+use App\Models\Employee;
+use App\Models\Supplier;
+use App\Models\OrderItem;
+use App\Models\StockItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -67,9 +69,67 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function ViewOrder()
     {
-        //
+        $orderData = Order::paginate(8);
+
+        return view('users.employee.employeeOrder')->with(['orderData' => $orderData,]);
+    }
+
+    public function EditOrder($id)
+    {
+        $order = Order::find($id);
+        return response()->json([
+            'status' => 200,
+            'order' => $order,
+        ]);
+    }
+
+    public function UpdateOrder(Request $request)
+    {
+        // if (!empty($request->input('order_message'))) {
+        //     dd('order_message is not empty.');
+        // } else {
+        //     dd('order_message is empty.');
+        // }
+
+        $order_id = $request->input('order_id');
+        $order = Order::find($order_id);
+
+        if ($request->input('order_message') == 'Completed') {
+            $order->order_status = 1;
+            $order->order_message = $request->input('order_message');
+            $order->update();
+
+            //for each order item, add to stock inventory
+            $orderItems = OrderItem::where('order_id', $order_id)->get();
+            foreach ($orderItems as $item) {
+                Stock::create([
+                    'user_id' => Auth::id(),
+                    'product_id' => $item->product_id,
+                    $product = Product::where('id', $item->product_id)->first(),
+                    'stock_product' => $product->product_name,
+                    'stock_image' => $product->product_image,
+                    'stock_item_type' => $product->product_type,
+                    'stock_item_category' => $product->product_category,
+                    'purchase_price' => $item->order_item_price,
+                    'stock_quantity' => $item->order_item_quantity,
+                    'stock_location' => $order->order_location,
+                    $supplier = Supplier::where('id', $item->supplier_id)->first(),
+                    'stock_item_brand' => $supplier->supplier_name,
+                    'stock_status' => 1,
+                    'stock_message' => 'In-Stock',
+                    'stock_item_barcode' => rand(00000000000, 99999999999),
+                    'selling_price' => number_format(($item->order_item_price / (1 - 0.25)), 2),
+                ]);
+            }
+        } else {
+            $order->order_status = 0;
+            $order->order_message = $request->input('order_message');
+            $order->update();
+        }
+
+        return redirect()->back()->with('status', 'Order Updated Successfully');
     }
 
     /**
