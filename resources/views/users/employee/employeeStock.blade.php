@@ -74,9 +74,52 @@
                                                         <td>{{ $stock->stock_quantity }}</td>
                                                         <td>{{ $stock->stock_location }}</td>
                                                         <td>{{ $stock->stock_message }}</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td>
+
+                                                            @php
+                                                            // safety stock = (max. lead time - average lead time) *
+                                                            // ave.product demand
+                                                            // safety stock is the amount of reserve inventory stored in
+                                                            // the facility
+                                                            $max_lead_time = 8;
+                                                            $ave_lead_time = 5;
+                                                            $ave_product_demand = rand(1, $stock->stock_quantity);
+                                                            $safety_stock = ($max_lead_time - $ave_lead_time ) *
+                                                            $ave_product_demand;
+                                                            echo $safety_stock;
+                                                            @endphp
+
+                                                        </td>
+                                                        <td>
+                                                            @php
+                                                            // reorder point = safety stock + (average consumption x
+                                                            // lead time)
+                                                            // reorder point identify the ideal time for a company to
+                                                            // place an order with
+                                                            // suppliers
+                                                            $lead_time = 5;
+                                                            $average_consumption = rand(1, $stock->stock_quantity);
+                                                            $reorder_point = $safety_stock + ($average_consumption *
+                                                            $lead_time);
+                                                            echo $reorder_point;
+                                                            @endphp
+
+                                                        </td>
+                                                        <td>
+                                                            @php
+                                                            // EOQ when to place an order with a supplier and in what
+                                                            // quantity
+                                                            // EOQ = sqrt( ( ( 2 x cost of placing each order x annual
+                                                            // demand ) / cost of storing ) )
+                                                            $cost_placing_order = $stock->purchase_price;
+                                                            $cost_storing = $stock->purchase_price * 10;
+                                                            $annual_demand = 100;
+                                                            $eoq = sqrt( (( 2*$cost_placing_order*$annual_demand ) /
+                                                            $cost_storing ) );
+                                                            echo number_format($eoq);
+                                                            @endphp
+
+                                                        </td>
                                                         {{-- <td>
                                                             <a href=" #" class="view" title="View"
                                                                 data-toggle="tooltip"><i
