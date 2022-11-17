@@ -1,13 +1,17 @@
 <?php
 
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\StockController;
-use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SupplierController;
+use App\Models\SaleItem;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,11 +50,20 @@ Route::get('editSupplier/{id}', [SupplierController::class, 'EditSupplier']);
 Route::get('editProduct/{id}', [ProductController::class, 'EditProduct']);
 
 //Cart
+Route::get('editQuantity/{id}', [CartController::class, 'EditQuantity']);
 // Route::get('decrease-quantity/{id}', [CartController::class, 'DecreaseQuantity']);
 // Route::get('increase-quantity/{id}', [CartController::class, 'IncreaseQuantity']);
 
 //Order
 Route::get('editOrder/{id}', [OrderController::class, 'EditOrder']);
+
+//Customer
+Route::get('editCustomer/{id}', [UserController::class, 'EditCustomer']);
+Route::get('editEmployee/{id}', [UserController::class, 'EditEmployee']);
+Route::get('/payment-success', [SaleController::class, 'ShowSuccessPage']);
+Route::get('generate-receipt/{id}', [SaleController::class, 'Receipt']);
+
+
 
 //Employee
 Route::group(['prefix' => 'employee'], function () {
@@ -72,6 +85,17 @@ Route::group(['prefix' => 'employee'], function () {
     Route::put('/updateOrder', [OrderController::class, 'UpdateOrder'])->name('order#UpdateOrder');
     Route::get('/stock', [StockController::class, 'StockIndex'])->name('stock#StockIndex');
     Route::get('/stock-product', [StockController::class, 'StockProduct'])->name('stock#StockProduct');
+    Route::get('/all-employee', [UserController::class, 'ViewEmployee'])->name('user#ViewEmployee');
+    Route::get('/all-customer', [UserController::class, 'ViewCustomer'])->name('user#ViewCustomer');
+    Route::put('/updateCustomer', [UserController::class, 'UpdateCustomer'])->name('user#UpdateCustomer');
+    Route::get('/deleteCustomer/{id}', [UserController::class, 'DeleteCustomer'])->name('user#DeleteCustomer');
+    Route::put('/updateEmployee', [UserController::class, 'UpdateEmployee'])->name('user#UpdateEmployee');
+    Route::get('/deleteEmployee/{id}', [UserController::class, 'DeleteEmployee'])->name('user#DeleteEmployee');
+    Route::get('/employee-sales', [SaleController::class, 'SalesIndex'])->name('sale#SalesIndex');
 });
 
 //Customer
+Route::group(['prefix' => 'customer'], function () {
+    Route::get('/', [CustomerController::class, 'index'])->name('customer#index'); //customer dashboard
+    Route::post('/place-order-with-stripe', [SaleController::class, 'StoreSale'])->name('sale#StoreSale');
+});

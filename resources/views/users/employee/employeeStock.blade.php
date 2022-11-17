@@ -83,7 +83,7 @@
                                                             // the facility
                                                             $max_lead_time = 8;
                                                             $ave_lead_time = 5;
-                                                            $ave_product_demand = rand(1, $stock->stock_quantity);
+                                                            $ave_product_demand = rand(1, ($stock->stock_quantity/2));
                                                             $safety_stock = ($max_lead_time - $ave_lead_time ) *
                                                             $ave_product_demand;
                                                             echo $safety_stock;
@@ -98,7 +98,7 @@
                                                             // place an order with
                                                             // suppliers
                                                             $lead_time = 5;
-                                                            $average_consumption = rand(1, $stock->stock_quantity);
+                                                            $average_consumption = rand(1, ($stock->stock_quantity/2));
                                                             $reorder_point = $safety_stock + ($average_consumption *
                                                             $lead_time);
                                                             echo $reorder_point;

@@ -2,20 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class EmployeeController extends Controller
+use function PHPUnit\Framework\isNull;
+use Illuminate\Support\Facades\Cookie;
+
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        return view('users.employee.employeeIndex');
+        $category = $request->input('stock_item_category');
+
+        if ($category == "") {
+            $stockData = Stock::all();
+        } else if ($category == "all") {
+            $stockData = Stock::all();
+        } else {
+            $stockData = Stock::where('stock_item_category', $category)->get();
+        }
+
+        $carts = Cart::where('user_id', Auth::id())->get();
+        // dd($carts);
+
+        Cookie::queue('cart', $carts, 45000);
+
+        return view('users.customer.customerPOS')->with(['stockData' => $stockData, 'carts' => $carts,]);
     }
 
     /**

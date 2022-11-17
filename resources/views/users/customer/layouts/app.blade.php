@@ -53,6 +53,14 @@
             </div>
             <div class="navbar-content scroll-div">
                 <ul class="nav pcoded-inner-navbar">
+
+                    @php
+                    $role = Auth::user()->role;
+                    @endphp
+
+                    <!-- Show only for employee -->
+                    @if($role == 'employee')
+
                     <li class="nav-item pcoded-menu-caption">
                         <label>Navigation</label>
                     </li>
@@ -61,89 +69,59 @@
                         <a href="{{ route('employee#index')}}" class="nav-link "><span class="pcoded-micon"><i
                                     class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                     </li>
+                    <!-- Show only for employee -->
+                    @endif
                     <li class="nav-item pcoded-menu-caption">
-                        <label>Point of Sale (POS)</label>
+                        <label>Navigation</label>
                     </li>
-                    <li data-username="form elements advance componant validation masking wizard picker select"
-                        class="nav-item">
+                    <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project"
+                        class="nav-item active">
                         <a href="{{ route('customer#index')}}" class="nav-link "><span class="pcoded-micon"><i
-                                    class="feather icon-file-text"></i></span><span class="pcoded-mtext">POS</span></a>
+                                    class="feather icon-home"></i></span><span class="pcoded-mtext">Point of Sale
+                                (POS)</span></a>
                     </li>
-                    <li class="nav-item pcoded-menu-caption">
-                        <label>Manage Users</label>
-                    </li>
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds"
-                        class="nav-item pcoded-hasmenu">
-                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i
-                                    class="feather icon-box"></i></span><span class="pcoded-mtext">Users</span></a>
-                        <ul class="pcoded-submenu">
-                            <li class=""><a href="{{ route('user#ViewCustomer') }}" class="">Customer</a></li>
-                            <li class=""><a href="{{ route('user#ViewEmployee') }}" class="">Employee</a></li>
-                            {{-- <li class=""><a href="bc_breadcrumb-pagination.html" class="">Breadcrumb &
-                                    paggination</a></li>
-                            <li class=""><a href="bc_collapse.html" class="">Collapse</a></li>
-                            <li class=""><a href="bc_tabs.html" class="">Tabs & pills</a></li>
-                            <li class=""><a href="bc_typography.html" class="">Typography</a></li> --}}
 
-                            {{-- <li class=""><a href="icon-feather.html" class="">Feather<span
-                                        class="pcoded-badge label label-danger">NEW</span></a></li> --}}
-                        </ul>
+                    <li class="nav-item pcoded-menu-caption">
+                        <label>Category</label>
                     </li>
+
+                    <form action="{{ route('customer#index')}}" method="GET">
+                        <li data-username="Charts Morris" class="nav-item">
+
+                            <input type="hidden" name="stock_item_category" id="stock_item_category" value="all">
+
+                            <button type="submit" class="nav-link "
+                                style=" background:0; border:0; color:white; width:100%; text-align:initial;"><span
+                                    class="pcoded-micon"></span><span class="pcoded-mtext">All</span>
+                            </button>
+                        </li>
+                    </form>
+
+                    @php
+                    $categories = DB::table('stocks')->get();
+                    // echo $categories;
+                    @endphp
+                    @foreach($categories->unique('stock_item_category') as $category)
+                    <form action="{{ route('customer#index')}}" method="GET">
+                        <li data-username="Charts Morris" class="nav-item">
+
+                            <input type="hidden" name="stock_item_category" id="stock_item_category" value="{{ $category->
+                                stock_item_category}}">
+
+                            <button type="submit" class="nav-link "
+                                style=" background:0; border:0; color:white; width:100%; text-align:initial;"><span
+                                    class="pcoded-micon"></span><span class="pcoded-mtext">{{ $category->
+                                    stock_item_category}}</span>
+                            </button>
+                        </li>
+                    </form>
+                    @endforeach
 
                     {{-- <li data-username="Table bootstrap datatable footable" class="nav-item">
                         <a href="tbl_bootstrap.html" class="nav-link "><span class="pcoded-micon"><i
                                     class="feather icon-server"></i></span><span class="pcoded-mtext">Table</span></a>
                     </li> --}}
 
-                    <li class="nav-item pcoded-menu-caption">
-                        <label>Manage Stocks</label>
-                    </li>
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds"
-                        class="nav-item pcoded-hasmenu">
-                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i
-                                    class="feather icon-box"></i></span><span class="pcoded-mtext">Inventory</span></a>
-                        <ul class="pcoded-submenu">
-                            <li class=""><a href="{{ route('stock#StockIndex')}}" class="">Stocks</a></li>
-                            <li class=""><a href="{{ route('stock#StockProduct')}}" class="">Product On-Hand</a></li>
-                            {{-- <li class=""><a href="bc_breadcrumb-pagination.html" class="">Breadcrumb &
-                                    paggination</a></li>
-                            <li class=""><a href="bc_collapse.html" class="">Collapse</a></li>
-                            <li class=""><a href="bc_tabs.html" class="">Tabs & pills</a></li>
-                            <li class=""><a href="bc_typography.html" class="">Typography</a></li> --}}
-
-                            {{-- <li class=""><a href="icon-feather.html" class="">Feather<span
-                                        class="pcoded-badge label label-danger">NEW</span></a></li> --}}
-                        </ul>
-                    </li>
-
-                    <li class="nav-item pcoded-menu-caption">
-                        <label>Manage Suppliers</label>
-                    </li>
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds"
-                        class="nav-item pcoded-hasmenu">
-                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i
-                                    class="feather icon-box"></i></span><span class="pcoded-mtext">Suppliers</span></a>
-                        <ul class="pcoded-submenu">
-                            <li class=""><a href="{{ route('employee#SupplierIndex')}}" class="">Suppliers</a></li>
-                            <li class=""><a href="{{ route('order#ViewController') }}" class="">Orders</a></li>
-                            {{-- <li class=""><a href="bc_breadcrumb-pagination.html" class="">Breadcrumb &
-                                    paggination</a></li>
-                            <li class=""><a href="bc_collapse.html" class="">Collapse</a></li>
-                            <li class=""><a href="bc_tabs.html" class="">Tabs & pills</a></li>
-                            <li class=""><a href="bc_typography.html" class="">Typography</a></li> --}}
-
-                            {{-- <li class=""><a href="icon-feather.html" class="">Feather<span
-                                        class="pcoded-badge label label-danger">NEW</span></a></li> --}}
-                        </ul>
-                    </li>
-
-                    <li class="nav-item pcoded-menu-caption">
-                        <label>Manage Sales</label>
-                    </li>
-                    <li data-username="Charts Morris" class="nav-item"><a href="{{ route('sale#SalesIndex')}}"
-                            class="nav-link "><span class="pcoded-micon"><i
-                                    class="feather icon-pie-chart"></i></span><span
-                                class="pcoded-mtext">Sales</span></a></li>
                     {{-- <li data-username="Maps Google" class="nav-item"><a href="map-google.html"
                             class="nav-link "><span class="pcoded-micon"><i class="feather icon-map"></i></span><span
                                 class="pcoded-mtext">Maps</span></a></li>
@@ -323,6 +301,8 @@
     <script src="{{url('/assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{url('/assets/js/pcoded.min.js')}}"></script>
     <script src="{{url('/assets/js/jquery-3.6.0.min.js')}}"></script>
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script src="{{url('/assets/js/checkout-stripe.js')}}"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>

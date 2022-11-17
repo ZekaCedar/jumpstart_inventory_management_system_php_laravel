@@ -112,7 +112,7 @@
                   <div class="card-header">
                     <h5> Order Product From {{ $supplierData->supplier_name }}</h5>
 
-                    <a style="float: right;" href="{{ URL::previous() }}" class="btn btn-warning"> <i
+                    <a style="float: right;" href="{{ route('employee#SupplierIndex')}}" class="btn btn-warning"> <i
                         class="fas fa-arrow-left"></i> Go
                       Back</a>
 
@@ -226,13 +226,18 @@
 
                                   <div class="input-group text-center mb-3" style="width: 150px;">
                                     <form action="{{ route ('cart#DecreaseQuantity' , $cart->id) }}" method="GET">
-                                      <button type="submit" class="input-group-text">-</button>
+
+                                      {{-- <input type="hidden" name="cart_id" id="cart_id"> --}}
+
+                                      <button type="submit" class="input-group-text changeQtybtn"
+                                        style="padding:1px 10px;" value="{{ $cart->id }}">-</button>
                                     </form>
                                     <input id=demoInput type="text" name="cart_item_quantity"
                                       class="form-control qty-input text-center" value="{{ $cart->cart_item_quantity }}"
-                                      style="height:38px;" readonly>
+                                      style="height:28px; padding:0;" readonly>
                                     <form action="{{ route ('cart#IncreaseQuantity' , $cart->id) }}" method="GET">
-                                      <button type="submit" class="input-group-text">+</button>
+                                      <button type="submit" class="input-group-text changeQtybtn"
+                                        style="padding:1px 8px;">+</button>
                                     </form>
 
                                   </div>
@@ -372,6 +377,28 @@
 @endsection
 
 @section('scripts')
+
+<script>
+  $(document).ready(function () {
+        $(document).on('click', '.changeQtybtn', function () {
+            var cart_id = $(this).val();
+            // alert(cart_id);
+            // $('#editModal1').modal('show');
+
+            $.ajax({
+                type: "GET",
+                url: "/editQuantity/"+cart_id,
+                success: function (response) {
+                    console.log(response);
+                    // $('#supplier_name').val(response.supplier.supplier_name);
+                    // $('#supplier_service').val(response.supplier.supplier_service);
+                    // $('#supplier_id').val(supplier_id);
+                }
+            });
+        });
+    });
+
+</script>
 
 {{-- <script>
   $.ajaxSetup({

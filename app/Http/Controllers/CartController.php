@@ -91,6 +91,15 @@ class CartController extends Controller
         return back()->with('status', 'Cart Item Deleted Successfully');
     }
 
+    public function EditQuantity($id)
+    {
+        $cart = Cart::find($id);
+        return response()->json([
+            'status' => 200,
+            'cart' => $cart,
+        ]);
+    }
+
 
     /**
      * Display the specified resource.
