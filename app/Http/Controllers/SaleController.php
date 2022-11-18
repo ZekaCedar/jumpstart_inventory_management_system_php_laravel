@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
+use Carbon\Carbon;
 use Stripe\Charge;
 use Stripe\Stripe;
 use App\Models\Cart;
 use App\Models\Sale;
 use App\Models\Stock;
 use App\Models\Product;
+
 use App\Models\Employee;
 use App\Models\SaleItem;
-
-use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -62,7 +63,7 @@ class SaleController extends Controller
                 // dd($products);
                 $price_value = $products->selling_price;
                 // dd($price_value);
-                $total = $total + ($itemdata['cart_item_quantity'] * $price_value) + 8;
+                $total = $total + ($itemdata['cart_item_quantity'] * $price_value);
                 // dd($total);
             }
 
@@ -73,7 +74,7 @@ class SaleController extends Controller
             Stripe::setApiKey($STRIPE_SECRET);
 
             \Stripe\Charge::create([
-                'amount' => $total * 100,
+                'amount' => ($total + 8) * 100,
                 'currency' => 'usd',
                 'description' => "Thank you for purchasing with JumpStart",
                 'source' => $stripetoken,
@@ -96,16 +97,19 @@ class SaleController extends Controller
             foreach ($items_in_cart as $itemdata) {
                 $products = Stock::where('product_id', $itemdata['product_id'])->first();
                 // dd($products);
-                $item_stock_qty = $products['stock_quantity'];
+                $item_stock_qty = $products['stock_quantity']; // existing in stock quantity
                 $item_sold_location = $products['stock_location'];
                 $total_quantity += $itemdata['cart_item_quantity'];
 
-                if ($item_stock_qty == 0) {
+                $remaining_qty = $item_stock_qty - $itemdata['cart_item_quantity'];
+
+                if ($remaining_qty == 0) {
+                    $products['stock_quantity'] = $remaining_qty;
                     $products['stock_status'] = 0;
+                    $products['created_at'] = Carbon::today()->toDateTimeString();
                     $products['stock_message'] = 'Out Of Stock';
                     $products->update();
                 } else {
-                    $remaining_qty = $item_stock_qty - $itemdata['cart_item_quantity'];
                     $products['stock_quantity'] = $remaining_qty;
                     $products->update();
                 }

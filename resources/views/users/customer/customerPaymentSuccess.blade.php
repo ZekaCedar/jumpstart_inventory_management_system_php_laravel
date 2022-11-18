@@ -222,7 +222,7 @@
                     style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0; ">
                     <strong>Payment Details:</strong><br />
 
-                    Amount: RM {{ $salesData -> sales_total }} <br />
+                    Amount: RM {{ $salesData -> sales_total + 8 }} <br />
                     {{-- Account: ${accountNumber}.<br /> --}}
                   </p>
                   <br>

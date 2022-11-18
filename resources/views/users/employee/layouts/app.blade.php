@@ -38,7 +38,9 @@
 
 </head>
 
-<body>
+<body style="min-height: 100vh;
+display: flex;
+flex-direction: column;">
     <!-- [ navigation menu ] start -->
     <nav class="pcoded-navbar">
         <div class="navbar-wrapper">
@@ -288,8 +290,8 @@
                             <ul class="pro-body">
                                 {{-- <li><a href="javascript:" class="dropdown-item"><i
                                             class="feather icon-settings"></i> Settings</a></li> --}}
-                                <li><a href="javascript:" class="dropdown-item"><i class="feather icon-user"></i>
-                                        Profile</a></li>
+                                {{-- <li><a href="javascript:" class="dropdown-item"><i class="feather icon-user"></i>
+                                        Profile</a></li> --}}
                                 <li>
                                     <a class="dropdown-item" class="dud-logout" title="Logout"
                                         href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -317,6 +319,12 @@
     <main class="py-4">
         @yield('content')
     </main>
+
+    <footer id="sticky-footer" class="flex-shrink-0 py-4 bg-dark text-white-50" style="margin-top: auto;">
+        <div class="container text-center">
+            <small>Copyright 2022 &copy; Siti Zulaikha Binti Mohd Affandi</small>
+        </div>
+    </footer>
 
     <!-- Required Js -->
     <script src="{{url('/assets/js/vendor-all.min.js')}}"></script>

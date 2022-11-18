@@ -11,6 +11,8 @@ use App\Models\Employee;
 use App\Models\Supplier;
 use App\Models\OrderItem;
 use App\Models\StockItem;
+use PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -97,6 +99,7 @@ class OrderController extends Controller
         $order = Order::find($order_id);
 
         if ($request->input('order_message') == 'Completed') {
+
             $order->order_status = 1;
             $order->order_message = $request->input('order_message');
             $order->update();
@@ -104,24 +107,40 @@ class OrderController extends Controller
             //for each order item, add to stock inventory
             $orderItems = OrderItem::where('order_id', $order_id)->get();
             foreach ($orderItems as $item) {
-                Stock::create([
-                    'user_id' => Auth::id(),
-                    'product_id' => $item->product_id,
-                    $product = Product::where('id', $item->product_id)->first(),
-                    'stock_product' => $product->product_name,
-                    'stock_image' => $product->product_image,
-                    'stock_item_type' => $product->product_type,
-                    'stock_item_category' => $product->product_category,
-                    'purchase_price' => $item->order_item_price,
-                    'stock_quantity' => $item->order_item_quantity,
-                    'stock_location' => $order->order_location,
-                    $supplier = Supplier::where('id', $item->supplier_id)->first(),
-                    'stock_item_brand' => $supplier->supplier_name,
-                    'stock_status' => 1,
-                    'stock_message' => 'In-Stock',
-                    'stock_item_barcode' => rand(00000000000, 99999999999),
-                    'selling_price' => number_format(($item->order_item_price / (1 - 0.25)), 2),
-                ]);
+
+                $product_id = $item->product_id;
+                $order_quantity = $item->order_item_quantity;
+
+                //check if the same item is already in stock
+                if (Stock::where('product_id', $product_id)->exists()) {
+                    $stock = Stock::where('product_id', $product_id)->first();
+                    $prev_quantity = $stock['stock_quantity'];
+                    $new_quantity = $prev_quantity + $order_quantity;
+                    $stock->stock_quantity = $new_quantity;
+                    $stock->stock_status = 1;
+                    $stock->stock_message = 'In-Stock';
+                    $stock->created_at = Carbon::today()->toDateTimeString();
+                    $stock->update();
+                } else {
+                    Stock::create([
+                        'user_id' => Auth::id(),
+                        'product_id' => $product_id,
+                        $product = Product::where('id', $item->product_id)->first(),
+                        'stock_product' => $product->product_name,
+                        'stock_image' => $product->product_image,
+                        'stock_item_type' => $product->product_type,
+                        'stock_item_category' => $product->product_category,
+                        'purchase_price' => $item->order_item_price,
+                        'stock_quantity' => $order_quantity,
+                        'stock_location' => $order->order_location,
+                        $supplier = Supplier::where('id', $item->supplier_id)->first(),
+                        'stock_item_brand' => $supplier->supplier_name,
+                        'stock_status' => 1,
+                        'stock_message' => 'In-Stock',
+                        'stock_item_barcode' => rand(00000000000, 99999999999),
+                        'selling_price' => number_format(($item->order_item_price / (1 - 0.25)), 2),
+                    ]);
+                }
             }
         } else {
             $order->order_status = 0;
@@ -130,6 +149,33 @@ class OrderController extends Controller
         }
 
         return redirect()->back()->with('status', 'Order Updated Successfully');
+    }
+
+    public function ViewInvoice($id)
+    {
+        $orderData = Order::find($id);
+        // dd($orderData);
+
+        $orderItemData = OrderItem::where('order_id', $id)->get();
+
+        return view('users.employee.employeeViewInvoice')->with(['orderData' => $orderData, 'orderItemData' => $orderItemData]);
+    }
+
+    public function invoice($id)
+    {
+
+        if (Order::where('id', $id)->exists()) {
+            $orderData = Order::find($id);
+            // dd($orderData);
+
+            $orderItemData = OrderItem::where('order_id', $id)->get();
+
+            $pdf = PDF::loadView('users.employee.employeeOrderInvoice', ['orderData' => $orderData, 'orderItemData' => $orderItemData]);
+
+            return $pdf->download('jumpstart_invoice.pdf');
+        } else {
+            return redirect()->back()->with('status', 'No transaction Found');
+        }
     }
 
     /**

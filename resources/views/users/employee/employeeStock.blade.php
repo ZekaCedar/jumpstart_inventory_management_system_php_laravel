@@ -59,9 +59,9 @@
                                                         <th>Status</th>
                                                         <th class="text-wrap">Safety Stock</th>
                                                         <th class="text-wrap">Reorder Point</th>
-                                                        <th class="text-wrap">Economic Order
-                                                            Quantity</th>
-                                                        {{-- <th>Actions</th> --}}
+                                                        <th class="text-wrap">Economic Order Quantity</th>
+                                                        <th>Reorder?</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -120,23 +120,18 @@
                                                             @endphp
 
                                                         </td>
-                                                        {{-- <td>
-                                                            <a href=" #" class="view" title="View"
-                                                                data-toggle="tooltip"><i
-                                                                    class="material-icons">&#xE417;</i></a>
-                                                            <a href="#" title="Edit" data-toggle="tooltip">
-                                                                <button type="button"
-                                                                    class="btn btn-primary btn-sm editbtn1" value=""
-                                                                    style="border: 0; padding:0; color:inherit;  background:0;">
-                                                                    <i style="margin-right: 0;"
-                                                                        class="material-icons">&#xE254;</i>
-                                                                </button>
+                                                        @php
+                                                        $supplier_id = DB::table('products')->where('id',
+                                                        $stock->product_id)->value('supplier_id');
+                                                        @endphp
+                                                        <td style="text-align: center;"">
+                                                            <a href=" {{ route('order#Order', $supplier_id ) }}"
+                                                            class="btn btn-info add-new " style="padding:2px 10px;
+                                                            color:white;">
+                                                            Order
                                                             </a>
+                                                        </td>
 
-                                                            <a href="" class="delete" title="Delete"
-                                                                data-toggle="tooltip"><i
-                                                                    class="material-icons">&#xE872;</i></a>
-                                                        </td> --}}
                                                     </tr>
                                                     @endforeach
                                                 </tbody>

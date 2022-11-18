@@ -14,8 +14,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
+        $stockoutData = Stock::where('stock_status', 0)->get();
 
-        return view('users.employee.employeeIndex');
+        return view('users.employee.employeeIndex')->with('stockoutData', $stockoutData);
     }
 
     /**

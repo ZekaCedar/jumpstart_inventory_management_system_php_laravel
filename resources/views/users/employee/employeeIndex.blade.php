@@ -171,6 +171,51 @@ $total_orders = DB::table('orders')->count('id');
               </div>
               <!--[ section ] end-->
 
+              <!--[ Recent Users ] start-->
+              <div class="col-xl-8 col-md-6">
+                <div class="card Recent-Users">
+                  <div class="card-header">
+                    <h5>Stock Status</h5>
+                  </div>
+                  <div class="card-block px-0 py-3">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <tbody>
+                          @if(count($stockoutData) > 0 )
+                          @foreach($stockoutData as $stockout)
+
+                          <tr class="unread">
+                            <td><img class="rounded-circle" style="width:40px;" src="assets/images/user/avatar-1.jpg"
+                                alt="activity-user"></td>
+                            <td>
+                              <h6 class="mb-1 text-wrap">{{ $stockout->stock_product }}</h6>
+                              <p class="m-0">{{ $stockout->stock_message }}</p>
+                            </td>
+                            <td>
+                              <h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>{{
+                                $stockout->created_at }}
+                              </h6>
+                            </td>
+                            <td>
+                              <a href="{{ route('stock#StockIndex')}}" class="label theme-bg2 text-white f-12">
+                                Check Stock
+                              </a>
+                            </td>
+                          </tr>
+                          @endforeach
+                          @else
+                          No Stock Out Issue
+                          @endif
+
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--[ Recent Users ] end-->
+
             </div>
           </div>
         </div>

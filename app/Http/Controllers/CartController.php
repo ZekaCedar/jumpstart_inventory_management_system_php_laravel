@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -54,13 +55,24 @@ class CartController extends Controller
         $cart = Cart::find($id);
         $updateQuantity = $cart['cart_item_quantity'];
 
-        if ($updateQuantity >= 0) {
+        if ($updateQuantity >= 0 && (Auth::user()->role == 'employee')) {
             $updateQuantity++;
+            $cart->cart_item_quantity = $updateQuantity;
+            $cart->update();
+            return back();
+        } else {
+            $product_id = $cart['product_id'];
+            $stock = Stock::where('product_id', $product_id)->first();
+            $max_qty = $stock['stock_quantity'];
+            if ($updateQuantity >= 0 && $updateQuantity < $max_qty) {
+                $updateQuantity++;
+                $cart->cart_item_quantity = $updateQuantity;
+                $cart->update();
+                return back();
+            } else {
+                return back()->with('status', 'you have reached maximum item quantity');
+            }
         }
-        $cart->cart_item_quantity = $updateQuantity;
-        $cart->update();
-
-        return back();
     }
 
     /**

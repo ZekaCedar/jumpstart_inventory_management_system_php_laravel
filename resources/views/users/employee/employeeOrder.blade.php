@@ -91,8 +91,8 @@
                                                         <td>{{ $order-> order_quantity}}</td>
                                                         <td>{{ $order-> tracking_no}}</td>
                                                         <td style="text-align: center;">
-                                                            <a href="#" class="view" title="View"
-                                                                data-toggle="tooltip"><i
+                                                            <a href="{{ route('order#ViewInvoice', $order->id)}}"
+                                                                class="view" title="View" data-toggle="tooltip"><i
                                                                     class="material-icons">&#xE417;</i></a>
                                                         </td>
 

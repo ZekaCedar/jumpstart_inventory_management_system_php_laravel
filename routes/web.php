@@ -92,6 +92,8 @@ Route::group(['prefix' => 'employee'], function () {
     Route::put('/updateEmployee', [UserController::class, 'UpdateEmployee'])->name('user#UpdateEmployee');
     Route::get('/deleteEmployee/{id}', [UserController::class, 'DeleteEmployee'])->name('user#DeleteEmployee');
     Route::get('/employee-sales', [SaleController::class, 'SalesIndex'])->name('sale#SalesIndex');
+    Route::get('/view-invoice/{id}', [OrderController::class, 'ViewInvoice'])->name('order#ViewInvoice');
+    Route::get('/invoice/{id}', [OrderController::class, 'invoice'])->name('order#invoice');
 });
 
 //Customer

@@ -46,9 +46,18 @@
                   <input type="hidden" value="" name="supplier_id">
 
                   <input type="hidden" value="{{ Auth()->user()->id }}" name="user_id">
+
+                  @if($item->stock_quantity == 0)
+
+                  <span>{{ $item -> stock_message }}</span>
+
+                  @else
                   <button type="submit" class="btn btn-danger mt-3" style="margin: 0; padding:5px; font-size:12px;"><i
                       class="fas fa-shopping-cart"></i>
                     Add to Cart</button>
+                  @endif
+
+
                 </form>
               </div>
 
