@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-# echo "Running composer"
-# composer global require hirak/prestissimo
+
+# Install Node.js (Render doesn't include it by default)
+curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+apt-get install -y nodejs
+
 echo "Running composer..."
 composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --working-dir=/var/www/html
 
