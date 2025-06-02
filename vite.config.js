@@ -8,4 +8,15 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+     build: {
+        outDir: 'public/build',        // ⬅️ Ensure output goes to public/build
+        manifest: true,                // ⬅️ Generate manifest.json
+        rollupOptions: {
+            input: [
+                'resources/sass/app.scss',
+                'resources/js/app.js',
+            ],
+        },
+        emptyOutDir: true              // Optional: clears old build files
+    }
 });
