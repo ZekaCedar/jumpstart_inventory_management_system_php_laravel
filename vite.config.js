@@ -8,11 +8,4 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    build: {
-        outDir: "public/build", // Ensure built assets go here
-        manifest: true,
-        rollupOptions: {
-            input: ["resources/sass/app.scss", "resources/js/app.js"],
-        },
-    },
 });
