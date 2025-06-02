@@ -1,7 +1,8 @@
 FROM richarvey/nginx-php-fpm:3.1.6
 
 # Install curl, Node.js, and npm
-RUN apt-get update && apt-get install -y curl nodejs npm && rm -rf /var/lib/apt/lists/*
+# Install curl, nodejs, and npm on Alpine
+RUN apk add --no-cache curl nodejs npm
 
 COPY . .
 
