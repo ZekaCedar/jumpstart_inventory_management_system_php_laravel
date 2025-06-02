@@ -44,7 +44,8 @@ class ProductController extends Controller
         if ($request->hasfile('product_image')) {
             $imageFile = $request->file('product_image');
             $imageName = uniqid() . '_' . $imageFile->getClientOriginalName();
-            $imageFile->move(public_path() . './uploads/products', $imageName);
+            // $imageFile->move(public_path() . './uploads/products', $imageName);
+            $imageFile->move(public_path('uploads/products'), $imageName);
             $product->product_image = $imageName;
         }
 

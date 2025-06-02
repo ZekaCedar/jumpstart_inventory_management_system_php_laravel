@@ -243,9 +243,11 @@
 
 @section('scripts')
 
-<script>
+{{-- <script>
   $(document).ready(function () {
         $(document).on('click', '.changeQtybtn', function () {
+          //event.preventDefault(); // Prevent the form from submitting the traditional way
+
             var cart_id = $(this).val();
             // alert(cart_id);
             // $('#editModal1').modal('show');
@@ -259,10 +261,13 @@
                     // $('#supplier_service').val(response.supplier.supplier_service);
                     // $('#supplier_id').val(supplier_id);
                 }
+                error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+                }      
             });
         });
     });
 
-</script>
+</script> --}}
 
 @endsection

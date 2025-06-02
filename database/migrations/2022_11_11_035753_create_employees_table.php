@@ -15,14 +15,15 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            // $table->integer('user_id');
             $table->string('employee_name');
             $table->string('employee_email');
             $table->string('employee_contact');
             $table->string('employee_job_title');
             $table->string('employee_job_location');
             $table->string('employee_job_description');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
