@@ -1,6 +1,12 @@
 FROM richarvey/nginx-php-fpm:3.1.6
 
+# Install curl, Node.js, and npm
+RUN apt-get update && apt-get install -y curl nodejs npm && rm -rf /var/lib/apt/lists/*
+
 COPY . .
+
+# Run npm install and build assets
+RUN npm install && npm run build
 
 # Image config
 ENV SKIP_COMPOSER 1
