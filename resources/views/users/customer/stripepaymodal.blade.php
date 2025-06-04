@@ -69,7 +69,7 @@
             <div class="col-md-12">
               <hr>
               <input type="hidden" name="stipe_payment_btn" value="1">
-              <button type="submit" class="btn btn-primary btn-sm btn-block">Pay Now with Stripe</button>
+              <button type="submit" class="btn btn-primary btn-sm btn-block" disabled>Pay Now with Stripe</button>
             </div>
           </div>
         </form>
