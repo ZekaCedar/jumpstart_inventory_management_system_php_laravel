@@ -85,9 +85,11 @@
                                                                 </button>
                                                             </a>
 
-                                                            <a href="{{ route('user#DeleteEmployee', $employee->id) }}"
-                                                                class="delete" title="Delete" data-toggle="tooltip"><i
-                                                                    class="material-icons">&#xE872;</i></a>
+                                                            @unless(app()->environment('production'))
+                                                                <a href="{{ route('user#DeleteEmployee', $employee->id) }}"
+                                                                    class="delete" title="Delete" data-toggle="tooltip"><i
+                                                                        class="material-icons">&#xE872;</i></a>
+                                                            @endunless
                                                         </td>
                                                     </tr>
                                                     @endforeach
