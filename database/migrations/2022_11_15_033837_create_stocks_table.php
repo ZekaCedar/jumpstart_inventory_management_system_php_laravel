@@ -26,7 +26,8 @@ return new class extends Migration
             $table->string('stock_location');
             $table->string('selling_price');
             $table->string('purchase_price');
-            $table->string('stock_quantity');
+            // $table->string('stock_quantity');
+            $table->integer('stock_quantity');
             $table->tinyInteger('stock_status')->default('0');
             $table->string('stock_message')->nullable();
             $table->string('safety_stock')->nullable();
