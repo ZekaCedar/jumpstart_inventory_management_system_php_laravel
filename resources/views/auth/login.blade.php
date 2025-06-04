@@ -18,7 +18,7 @@
                     </div>
                     <h3 class="mb-4">Login</h3>
                     <div class="input-group mb-3">
-                        <input type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        <input type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ app()->environment('production') ? 'admin@gmail.com' : old('email') }}" required autocomplete="email" autofocus>
 
                         @error('email')
                             <span class="invalid-feedback" role="alert">
@@ -28,7 +28,7 @@
 
                     </div>
                     <div class="input-group mb-4">
-                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="password">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ app()->environment('production') ? 'admin123' : '' }}" required autocomplete="current-password" placeholder="password">
 
                         @error('password')
                             <span class="invalid-feedback" role="alert">
